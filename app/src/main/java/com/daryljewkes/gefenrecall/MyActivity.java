@@ -1,6 +1,9 @@
 package com.daryljewkes.gefenrecall;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,18 +30,26 @@ import java.io.InputStreamReader;
 public class MyActivity extends Activity implements View.OnClickListener {
 
     private Button btnRecall1, btnRecall2;
+    private TextView txtConnStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+        txtConnStatus = (TextView) findViewById(R.id.txtConnStatus);
         btnRecall1 = (Button) findViewById(R.id.btnRecall1);
         btnRecall2 = (Button) findViewById(R.id.btnRecall2);
         btnRecall1.setOnClickListener(this);
         btnRecall2.setOnClickListener(this);
+        CheckWifi();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        CheckWifi();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,10 +70,25 @@ public class MyActivity extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    private void CheckWifi() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if (mWifi.isConnected()) {
+            txtConnStatus.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, "wifi connected", Toast.LENGTH_SHORT).show();
+        } else {
+            txtConnStatus.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "no wifi", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
     private void performRecall(int recallId) {
         Log.d("main", "id is :" + recallId);
 
-        String geffonUrl = "http://thegeffon/actionHandler.shtml?a=recallPreset&r=index.shtml&preset=" + recallId;
+        String geffonUrl = "http://" + getResources().getString(R.string.connectedTo)  + "/actionHandler.shtml?a=recallPreset&r=index.shtml&preset=" + recallId;
 
         HttpTask task = new HttpTask();
 
@@ -74,7 +100,6 @@ public class MyActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
         switch ((view.getId())) {
             case R.id.btnRecall1:
                 performRecall(1);
