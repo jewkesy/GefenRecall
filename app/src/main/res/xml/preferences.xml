@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Gefen Devices">
+
+        <EditTextPreference
+            android:key="gefenIP_preference"
+            android:title="Gefen IP Address"
+            android:summary="The local IP address of the Gefen"
+            android:dialogTitle="Please enter the IP Address"
+            />
+
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -2,10 +2,13 @@ package com.daryljewkes.gefenrecall;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,19 +33,21 @@ import java.io.InputStreamReader;
 public class MyActivity extends Activity implements View.OnClickListener {
 
     private Button btnRecall1, btnRecall2;
-    private TextView txtConnStatus;
+    private TextView txtConnectTo, txtConnStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+        txtConnectTo = (TextView) findViewById(R.id.txtConnectedTo);
         txtConnStatus = (TextView) findViewById(R.id.txtConnStatus);
         btnRecall1 = (Button) findViewById(R.id.btnRecall1);
         btnRecall2 = (Button) findViewById(R.id.btnRecall2);
         btnRecall1.setOnClickListener(this);
         btnRecall2.setOnClickListener(this);
         CheckWifi();
+        loadPrefs();
     }
 
     @Override
@@ -65,9 +70,24 @@ public class MyActivity extends Activity implements View.OnClickListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Intent prefIntent = new Intent();
+            prefIntent.setClass(MyActivity.this, SetPreferenceActivity.class);
+            startActivity(prefIntent, null);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        loadPrefs();
+    }
+
+    private void loadPrefs() {
+        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String strConnectTo = mySharedPreferences.getString("edittext_preference", "");
+        txtConnectTo.setText(strConnectTo);
     }
 
     private void CheckWifi() {
@@ -88,7 +108,10 @@ public class MyActivity extends Activity implements View.OnClickListener {
     private void performRecall(int recallId) {
         Log.d("main", "id is :" + recallId);
 
-        String geffonUrl = "http://" + getResources().getString(R.string.connectedTo)  + "/actionHandler.shtml?a=recallPreset&r=index.shtml&preset=" + recallId;
+        SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String strConnectTo = mySharedPreferences.getString("edittext_preference", "");
+
+        String geffonUrl = "http://" + strConnectTo  + "/actionHandler.shtml?a=recallPreset&r=index.shtml&preset=" + recallId;
 
         HttpTask task = new HttpTask();
 
