@@ -18,12 +18,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnRecall1"
         android:textStyle="bold"
+        android:drawableLeft="@drawable/ic_number_1"
         android:text="@string/holding_text"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnRecall2"
         android:textStyle="bold"
+        android:drawableLeft="@drawable/ic_number_2"
         android:text="@string/holding_text"/>
 
     <TextView
@@ -33,5 +35,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"/>
-
 </LinearLayout>
