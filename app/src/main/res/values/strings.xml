@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Gefen Recall</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="recall1_text">Mezzanine</string>
-    <string name="recall2_text">Sluice</string>
-
+    <string name="holding_text">Set in Preferences</string>
 </resources>

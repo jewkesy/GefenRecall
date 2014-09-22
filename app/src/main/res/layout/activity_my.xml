@@ -18,13 +18,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnRecall1"
         android:textStyle="bold"
-        android:text="@string/recall1_text"/>
+        android:text="@string/holding_text"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnRecall2"
         android:textStyle="bold"
-        android:text="@string/recall2_text"/>
+        android:text="@string/holding_text"/>
 
     <TextView
         android:id="@+id/txtConnStatus"

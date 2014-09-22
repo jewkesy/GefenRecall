@@ -54,6 +54,7 @@ public class MyActivity extends Activity implements View.OnClickListener {
     protected void onRestart() {
         super.onRestart();
         CheckWifi();
+        loadPrefs();
     }
 
     @Override
@@ -86,8 +87,13 @@ public class MyActivity extends Activity implements View.OnClickListener {
 
     private void loadPrefs() {
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String strConnectTo = mySharedPreferences.getString("edittext_preference", "");
+        String strConnectTo = mySharedPreferences.getString("gefenIP_preference", "[empty]");
+        String strRecall1Label = mySharedPreferences.getString("gefenOneLabel_preference", "[empty]");
+        String strRecall2Label = mySharedPreferences.getString("gefenTwoLabel_preference", "[empty]");
+
         txtConnectTo.setText(strConnectTo);
+        btnRecall1.setText(strRecall1Label);
+        btnRecall2.setText(strRecall2Label);
     }
 
     private void CheckWifi() {
@@ -100,16 +106,14 @@ public class MyActivity extends Activity implements View.OnClickListener {
         } else {
             txtConnStatus.setVisibility(View.VISIBLE);
             Toast.makeText(this, "no wifi", Toast.LENGTH_SHORT).show();
-
         }
-
     }
 
     private void performRecall(int recallId) {
         Log.d("main", "id is :" + recallId);
 
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String strConnectTo = mySharedPreferences.getString("edittext_preference", "");
+        String strConnectTo = mySharedPreferences.getString("gefenIP_preference", "");
 
         String geffonUrl = "http://" + strConnectTo  + "/actionHandler.shtml?a=recallPreset&r=index.shtml&preset=" + recallId;
 
@@ -118,7 +122,6 @@ public class MyActivity extends Activity implements View.OnClickListener {
         task.execute(geffonUrl);
 
         Toast.makeText(this, "Recall " + recallId + " sent", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

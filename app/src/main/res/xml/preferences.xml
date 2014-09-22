@@ -11,6 +11,18 @@
             android:summary="The local IP address of the Gefen"
             android:dialogTitle="Please enter the IP Address"
             />
+        <EditTextPreference
+            android:key="gefenOneLabel_preference"
+            android:title="Gefen Recall 1 Label"
+            android:summary="The button label for Recall 1"
+            android:dialogTitle="Please enter the label"
+            />
+        <EditTextPreference
+            android:key="gefenTwoLabel_preference"
+            android:title="Gefen Recall 2 Label"
+            android:summary="The button label for Recall 2"
+            android:dialogTitle="Please enter the label"
+            />
 
     </PreferenceCategory>
 </PreferenceScreen>
