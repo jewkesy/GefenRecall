@@ -75,6 +75,9 @@ public class MyActivity extends Activity implements View.OnClickListener {
             prefIntent.setClass(MyActivity.this, SetPreferenceActivity.class);
             startActivity(prefIntent, null);
             return true;
+        } else if (id == R.id.action_exit) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
